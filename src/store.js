@@ -1,35 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit'
-import userReducer from '@/features/userSlice'
+import { create } from 'zustand'
 
-const store = configureStore({
-  reducer: {
-    user: userReducer
-  }
-})
+export const useStore = create((set) => ({
+  count: 1,
+  inc: () => set((state) => ({ count: state.count + 1 }))
+}))
 
-// const initialState = {
-//   user: null
+// function Counter() {
+//   const { count, inc } = useStore()
+//   return (
+//     <div>
+//       <span>{count}</span>
+//       <button onClick={inc}>one up</button>
+//     </div>
+//   )
 // }
-
-// const userSlice = createSlice({
-//   name: 'user',
-//   initialState,
-//   reducers: {
-//     setUser: (state, action) => {
-//       state.user = action.payload
-//     },
-//     clearUser: (state) => {
-//       state.user = null
-//     }
-//   }
-// })
-
-// export const { setUser, clearUser } = userSlice.actions
-
-// const store = configureStore({
-//   reducer: {
-//     user: userSlice.reducer
-//   }
-// })
-
-export default store

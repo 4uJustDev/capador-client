@@ -2,12 +2,9 @@ import { Flex, IconButton, Button, Container, Text, Avatar } from '@chakra-ui/re
 import { useColorMode } from '@/components/ui/color-mode'
 import { Link } from 'react-router-dom'
 import { LuMoon, LuSun, LuShoppingCart, LuUser, LuInfo } from 'react-icons/lu'
-import { selectUserPhoto } from '@/features/userSlice'
 
 export const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode()
-
-  const photo = selectUserPhoto()
 
   return (
     <Flex as="header" p={4} align="center" justify="space-between" borderBottom="1px solid">
@@ -34,7 +31,8 @@ export const Header = () => {
         <Link to="/user">
           <IconButton variant="outline">
             {/* {photo ? <Avatar size="sm" src={photo} name={user.name} /> : <LuUser />} */}
-            {photo ? <Avatar size="sm" src={photo} /> : <LuUser />}
+            {/* {photo ? <Avatar size="sm" src={photo} /> : <LuUser />} */}
+            <LuUser />
           </IconButton>
         </Link>
 
