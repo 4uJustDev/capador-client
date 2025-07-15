@@ -29,14 +29,14 @@ export const Header = () => {
         </Link>
 
         <Link to="/user">
-          <IconButton variant="outline">
+          <IconButton>
             {/* {photo ? <Avatar size="sm" src={photo} name={user.name} /> : <LuUser />} */}
             {/* {photo ? <Avatar size="sm" src={photo} /> : <LuUser />} */}
             <LuUser />
           </IconButton>
         </Link>
 
-        <IconButton ml="5" variant="outline" onClick={toggleColorMode}>
+        <IconButton ml="5" variant="ghost" onClick={toggleColorMode}>
           {colorMode === 'light' ? <LuSun /> : <LuMoon />}
         </IconButton>
       </Flex>

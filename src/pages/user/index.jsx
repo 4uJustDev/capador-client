@@ -1,52 +1,55 @@
-import { Container, Box, Button, Image, Text } from '@chakra-ui/react'
-import { GoogleLogin } from '@react-oauth/google'
-import { useStore } from '@/store'
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Flex,
+  Heading,
+  Text
+} from '@chakra-ui/react'
+import { useUserStore } from '@/store'
+import { toaster } from '@/components/ui/toaster'
+import { GoogleAuth } from '@/widgets'
 
 export const UserPage = () => {
-  // const dispatch = useDispatch()
-  // const user = useSelector((state) => state.user.user)
+  const { user, isAuthenticated, clearUser } = useUserStore()
 
-  // if (!user) {
-  //   return (
-  //     <Container center>
-  //       <GoogleLogin
-  //         onSuccess={(credentialResponse) => {
-  //           // const decoded = jwtDecode(credentialResponse.credential)
-  //           // dispatch(setUser(decoded))
-  //         }}
-  //         onError={() => {
-  //           console.log('Google Login Failed')
-  //         }}
-  //       />
-  //     </Container>
-  //   )
-  // }
+  if (!isAuthenticated) return <GoogleAuth />
 
-  const { count, inc } = useStore()
+  const handleLogout = () => {
+    clearUser()
+    toaster.create({
+      description: 'Вы вышли из системы',
+      type: 'info',
+      duration: 2000,
+      isClosable: true
+    })
+  }
 
   return (
-    <div>
-      <span>{count}</span>
-      <button onClick={inc}>one up</button>
-    </div>
+    <Card maxW="md" mx="auto" mt={8} boxShadow="xl">
+      <CardHeader>
+        <Flex spacing="4">
+          <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+            <Avatar name={user.name} src={user.picture} size="xl" />
+            <Box>
+              <Heading size="lg">{user.name}</Heading>
+              <Text color="gray.500">{user.email}</Text>
+            </Box>
+          </Flex>
+        </Flex>
+      </CardHeader>
+      <CardBody py={0}>
+        <Text>ID: {user.id}</Text>
+      </CardBody>
+      <CardFooter>
+        <Button colorScheme="red" variant="outline" width="full" onClick={handleLogout}>
+          Выйти
+        </Button>
+      </CardFooter>
+    </Card>
   )
-  // return (
-  //   <Box borderWidth="1px" borderRadius="lg" p={4} maxW="sm" mx="auto" mt={8} textAlign="center">
-  //     {/* <Image
-  //       src={user.picture}
-  //       alt={user.name}
-  //       borderRadius="full"
-  //       boxSize="100px"
-  //       mx="auto"
-  //       mb={4}
-  //     />
-  //     <Text fontWeight="bold" fontSize="xl">
-  //       {user.name}
-  //     </Text>
-  //     <Text color="gray.500">{user.email}</Text>
-  //     <Button mt={4} colorScheme="red" onClick={() => dispatch(clearUser())}>
-  //       Выйти
-  //     </Button> */}
-  //   </Box>
-  // )
 }
